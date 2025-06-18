@@ -34,7 +34,7 @@ import ioh
 import numpy as np
 import pandas as pd
 from QuantumSAGE_DE import QuantumSAGE_DE
-from 
+from ARM_DE import ARM_DE
 
 # Choose which algorithm to run:
 AlgorithmClass = QuantumSAGE_DE  # or ARM_DE
