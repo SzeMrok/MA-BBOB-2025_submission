@@ -7,7 +7,7 @@ def sobol_sampling(n_points, dim, lb=-5, ub=5):
     sample = sample[:n_points]
     return lb + (ub - lb) * sample
 
-class MERADS_QFUR_V21a:
+class QuantumSAGE_DE:
     def __init__(self, budget_factor=2000, memory_factor=0.3):
         self.budget_factor = budget_factor
         self.memory_factor = memory_factor

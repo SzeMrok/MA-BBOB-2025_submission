@@ -4,7 +4,7 @@
 	"function_id": 100, 
 	"function_name": "ManyAffine", 
 	"maximization": false, 
-	"algorithm": {"name": "MERADS_QFUR_V21a", "info": "algorithm_info"},
+	"algorithm": {"name": "QuantumSAGE_DE", "info": "algorithm_info"},
 	"attributes": ["evaluations", "raw_y"],
 	"scenarios": [
 		{"dimension": 2,
