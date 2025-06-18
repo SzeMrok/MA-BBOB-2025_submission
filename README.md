@@ -1,18 +1,20 @@
-# QuantumSAGE-DE for MA-BBOB Competition 2025
+# QuantumSAGE-DE and MERADS_QFUR_V10a for MA-BBOB Competition 2025
 
 ## Overview
 
-This repository contains the code and performance data for the **QuantumSAGE-DE** algorithm, submitted to the MA-BBOB 2025 competition.
+This repository contains the code and performance data for two algorithms submitted to the MA-BBOB 2025 competition:
 
-- **Algorithm code:** [`QuantumSAGE_DE.py`](QuantumSAGE_DE.py)
-- **Performance data:** [`results.zip`](results.zip) (unpacked in [`results/`](results/))
-- **Dependencies:** [`requirements.txt`](requirements.txt)
+- **QuantumSAGE-DE** ([`QuantumSAGE_DE.py`](QuantumSAGE_DE.py))
+- **MERADS_QFUR_V10a** ([`MERADS_QFUR_V10a.py`](MERADS_QFUR_V10a.py))
+
+Performance data for both algorithms is included in [`results.zip`](results.zip) (unpacked in [`results/`](results/)).  
+All dependencies are listed in [`requirements.txt`](requirements.txt).
+
+---
 
 ## Reproducibility Instructions
 
 ### 1. Install Dependencies
-
-Install the required Python packages:
 
 ```sh
 pip install -r requirements.txt
@@ -22,29 +24,32 @@ pip install -r requirements.txt
 
 Download the instance specification files (`weights.csv`, `iids.csv`, `opt_locs.csv`) from the [competition website](https://iohprofiler.github.io/competitions/mabbob25) and place them in the root of this repository.
 
-### 3. Running the Algorithm
+### 3. Running the Algorithms
 
-The algorithm is implemented as a class in [`QuantumSAGE_DE.py`](QuantumSAGE_DE.py). To run it on the MA-BBOB problems and collect results, use a script similar to the following:
+Both algorithms are implemented as classes and can be run in the same way.  
+Below is an example script for running either algorithm (replace `AlgorithmClass` with `QuantumSAGE_DE` or `MERADS_QFUR_V10a` as needed):
 
 ```python
 import ioh
 import numpy as np
 import pandas as pd
 from QuantumSAGE_DE import QuantumSAGE_DE
+from MERADS_QFUR_V10a import MERADS_QFUR_V10a
+
+# Choose which algorithm to run:
+AlgorithmClass = QuantumSAGE_DE  # or MERADS_QFUR_V10a
 
 # Load instance specifications
 weights = pd.read_csv("weights.csv", index_col=0)
 iids = pd.read_csv("iids.csv", index_col=0)
 opt_locs = pd.read_csv("opt_locs.csv", index_col=0)
 
-# Set up logger for IOHexperimenter
-logger = ioh.logger.Analyzer(
-    root="results",
-    folder_name="QuantumSAGE_DE",
-    algorithm_name="QuantumSAGE_DE"
-)
-
 for dim in [2, 5]:
+    logger = ioh.logger.Analyzer(
+        root="results",
+        folder_name=AlgorithmClass.__name__,
+        algorithm_name=AlgorithmClass.__name__
+    )
     for idx in range(100):
         problem = ioh.problem.ManyAffine(
             xopt=np.array(opt_locs.iloc[idx])[:dim],
@@ -55,13 +60,13 @@ for dim in [2, 5]:
         problem.set_id(100)
         problem.set_instance(idx)
         problem.attach_logger(logger)
-        algo = QuantumSAGE_DE(budget_factor=2000)
+        algo = AlgorithmClass(budget_factor=2000)
         algo(problem)
         problem.reset()
-logger.close()
+    logger.close()
 ```
 
-This will generate results in the `results/` directory, matching the structure required for the competition.
+This will generate results in the `results/` directory, with subfolders for each algorithm.
 
 ### 4. Analyzing Results
 
@@ -72,11 +77,19 @@ import iohinspector
 manager = iohinspector.DataManager()
 manager.add_folder("results/2D/QuantumSAGE_DE")
 manager.add_folder("results/5D/QuantumSAGE_DE")
+manager.add_folder("results/2D/MERADS_QFUR_V10a")
+manager.add_folder("results/5D/MERADS_QFUR_V10a")
 df = manager.load(True, True)
 ```
+
+---
 
 ## Notes
 
 - The provided `results.zip` contains the data generated for the official submission.
 - For full reproducibility, use the same instance files and Python environment.
 - For more details, see the [MA-BBOB 2025 competition page](https://iohprofiler.github.io/competitions/mabbob25).
+
+## Contact
+
+For questions or reproducibility issues, please contact the authors via the competition organizers.
