@@ -1,11 +1,11 @@
-# QuantumSAGE-DE and MERADS_QFUR_V10a for MA-BBOB Competition 2025
+# QuantumSAGE-DE and ARM-DE for MA-BBOB Competition 2025
 
 ## Overview
 
 This repository contains the code and performance data for two algorithms submitted to the MA-BBOB 2025 competition:
 
 - **QuantumSAGE-DE** ([`QuantumSAGE_DE.py`](QuantumSAGE_DE.py))
-- **MERADS_QFUR_V10a** ([`MERADS_QFUR_V10a.py`](MERADS_QFUR_V10a.py))
+- **ARM-DE** ([`ARM_DE.py`](ARM_DE.py))
 
 Performance data for both algorithms is included in [`results.zip`](results.zip) (unpacked in [`results/`](results/)).  
 All dependencies are listed in [`requirements.txt`](requirements.txt).
@@ -27,17 +27,17 @@ Download the instance specification files (`weights.csv`, `iids.csv`, `opt_locs.
 ### 3. Running the Algorithms
 
 Both algorithms are implemented as classes and can be run in the same way.  
-Below is an example script for running either algorithm (replace `AlgorithmClass` with `QuantumSAGE_DE` or `MERADS_QFUR_V10a` as needed):
+Below is an example script for running either algorithm (replace `AlgorithmClass` with `QuantumSAGE_DE` or `ARM_DE` as needed):
 
 ```python
 import ioh
 import numpy as np
 import pandas as pd
 from QuantumSAGE_DE import QuantumSAGE_DE
-from MERADS_QFUR_V10a import MERADS_QFUR_V10a
+from 
 
 # Choose which algorithm to run:
-AlgorithmClass = QuantumSAGE_DE  # or MERADS_QFUR_V10a
+AlgorithmClass = QuantumSAGE_DE  # or ARM_DE
 
 # Load instance specifications
 weights = pd.read_csv("weights.csv", index_col=0)
@@ -77,8 +77,8 @@ import iohinspector
 manager = iohinspector.DataManager()
 manager.add_folder("results/2D/QuantumSAGE_DE")
 manager.add_folder("results/5D/QuantumSAGE_DE")
-manager.add_folder("results/2D/MERADS_QFUR_V10a")
-manager.add_folder("results/5D/MERADS_QFUR_V10a")
+manager.add_folder("results/2D/ARM_DE")
+manager.add_folder("results/5D/ARM_DE")
 df = manager.load(True, True)
 ```
 
